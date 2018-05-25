@@ -1,25 +1,38 @@
+import InputImage from './InputImage'
+
 function Menu(items) {
+    let _this = this
+    this.items = []
+    this.mouse = { x: 0, y: 0 }
 
-    this.items = items
-
+    items.forEach(item => {
+        this.items.push(new InputImage(item, 50, 50, 200, 200))
+    })
 }
 
 Menu.prototype = {
 
-    drag() {
+    update(data) {
+        this.items.forEach(item => {
+            item.update(this.mouse.x, this.mouse.y, 200, 200)
+        })
+    },
+
+    draw(data) {
+        this.items.forEach(item => {
+            item.draw(data.ctx)
+        })
+    },
+
+    onMouseDown(data) {
 
     },
 
-    drop() {
-
-    },
-
-    update() {
-
-    },
-
-    draw() {
-
+    onMouseMove(data) {
+        this.mouse = {
+            x: data.x,
+            y: data.y
+        }
     }
 
 }

@@ -8,6 +8,11 @@ function Mokou(canvas, input, names) {
     })
     this.images = []
 
+    this.mouse = {
+        x: 0,
+        y: 0
+    }
+
     names.forEach(name => {
         this.images.push(Util.normalizePath(input) + '/' + name)
     })
@@ -31,30 +36,28 @@ function Mokou(canvas, input, names) {
     })
 
     this.core.on('mouseMove', (data, e) => {
-        console.log('mouse move')
-    })
-
-    this.core.on('resize', (data, e) => {
-        console.log('resizing')
+        this.menu.onMouseMove(e)
     })
 
     this.core.on('update', data => {
-
+        this.update(data)
     })
 
     this.core.on('draw', data => {
-
+        this.draw(data)
     })
+
+    this.core.start()
 }
 
 Mokou.prototype = {
 
     update(data) {
-        // this.menu.update(data)
+        this.menu.update(data)
     },
 
-    draw() {
-        // this.menu.draw(data)
+    draw(data) {
+        this.menu.draw(data)
     }
 
 }

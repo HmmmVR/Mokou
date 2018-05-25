@@ -37,7 +37,6 @@ function Core(canvas, options) {
     this.canvas.addEventListener('mousedown', function (e) { _this.event.mouseDown(_this.getPublic(), e) }, false)
     this.canvas.addEventListener('mouseup', function (e) { _this.event.mouseUp(_this.getPublic(), e) }, false)
     this.canvas.addEventListener('mousemove', function (e) { _this.event.mouseMove(_this.getPublic(), e) }, false)
-    this.canvas.addEventListener('resize', function(e) { _this.event.resize(_this.getPublic(), e)}, false)
     
     window.addEventListener('keydown', function (e) { _this.event.keyDown(_this.getPublic(), e) }, false)
     window.addEventListener('keyup', function (e) { _this.event.keyUp(_this.getPublic(), e) }, false)
@@ -46,6 +45,8 @@ function Core(canvas, options) {
         if (_this.options.fullscreen) {
             _this.fullscreen()
         }
+
+        _this.event.resize(_this.getPublic(), e)
     })
 
 }
@@ -53,18 +54,17 @@ function Core(canvas, options) {
 Core.prototype = {
 
     fullscreen() {
-        this.canvas.width = document.body.clientWidth
-        this.canvas.height = document.body.clientHeight
+        this.canvas.width = window.innerWidth
+        this.canvas.height = window.innerHeight
         this.width = this.canvas.width
         this.height = this.canvas.height
     },
 
     start() {
         this.util()
+        this.ctx.clearRect(0,0, this.width, this.height)
         this.event.update(this.getPublic())
         this.event.draw(this.getPublic())
-
-        this.ctx.clearRect(0,0, this.width, this.height)
 
         requestAnimationFrame(this.start.bind(this))
     },
